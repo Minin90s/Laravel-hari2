@@ -65,7 +65,7 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
+        return view('blogs.show')->with(compact('blog'));
     }
 
     /**
@@ -76,7 +76,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        //
+        return view('blogs.edit')->with(compact('blog'));
     }
 
     /**
@@ -88,7 +88,10 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        $blog->update($request->only('title','body'));
+        return redirect()->route('blog:index')->with(['alert-type' => 'alert-primary','alert'=> 'Your data updated ']);
+
+       // dd($blog);
     }
 
     /**
@@ -97,8 +100,9 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
+    public function padam(Blog $blog)
     {
-        //
+        $blog->delete();
+        return redirect()->route('blog:index')->with(['alert-type' => 'alert-danger','alert'=> 'Your blog deleted ']);
     }
 }
